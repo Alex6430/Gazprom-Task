@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Получение информации</title>
+    </head>
+    <body>
+        <form>
+            <label>Введите почтовый адрес:
+                <input type="text" id="mailField">
+                <button type="button" onclick="get_data_log()">Найти</button>
+            </label>
+        </form>
+        <div>
+            <label>Лог:
+                <textarea style="width:800px; height:300px" disabled id="logResult"></textarea>
+            </label>
+        </div>
+        <script>
+            var inputMailField = document.getElementById('mailField');
+            var outputLogResult = document.getElementById('logResult');
+            
+            function httpGet(theUrl) {
+                let xmlHttpReq = new XMLHttpRequest();
+                xmlHttpReq.open("GET", theUrl, false);
+                xmlHttpReq.send(null);
+                return xmlHttpReq.responseText;
+              }
+
+            function get_data_log() {
+                <!-- outputLogResult.value = inputMailField.value; -->
+                var req = JSON.parse(httpGet("http://localhost/cgi-bin/mail_log.fcgi?mail=" + inputMailField.value));
+                
+                if( req == undefined ) {
+                    outputLogResult.value = req.error.text;
+                    outputLogResult.style.borderColor = "red";
+                    outputLogResult.style.borderWidth = "3px";
+                } else if (req.data == undefined) {
+                    outputLogResult.value = req.error.text;
+                    outputLogResult.style.borderColor = "red";
+                    outputLogResult.style.borderWidth = "3px";
+                } else {
+                    outputLogResult.value = req.data;
+                    outputLogResult.style.borderColor = "black";
+                    outputLogResult.style.borderWidth = "0.5px";
+                }
+            };
+        </script>
+    </body>
+</html>
