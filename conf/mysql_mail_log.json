@@ -1,0 +1,10 @@
+{
+    "platform"  : "mysql",
+    "host"      : "127.0.0.1",
+    "port"      : 1906,
+    "dbname"    : "mail_log",
+    "user"      : "root",
+    "pw"        : "lancelot",
+    "socket"    : "/tmp/mysql.sock",
+    "init_command": "SET SESSION time_zone='+00:00';"
+}
